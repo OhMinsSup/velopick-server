@@ -5,7 +5,10 @@ services:
     image: mongo
     restart: always
     environment:
+      MONGO_INITDB_DATABASE: velopick
       MONGO_INITDB_ROOT_USERNAME: veloss
       MONGO_INITDB_ROOT_PASSWORD: velopick
+    volumes:
+      - ./mongo-volume:/data/db
     ports:
       - 27017:27017
