@@ -1,11 +1,6 @@
 import 'dotenv/config'
 import 'reflect-metadata'
-import {
-  EntityManager,
-  EntityRepository,
-  MikroORM,
-  RequestContext,
-} from '@mikro-orm/core'
+import { EntityManager, EntityRepository, MikroORM } from '@mikro-orm/core'
 
 import Server from './Server'
 import { User } from 'entities'

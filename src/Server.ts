@@ -3,6 +3,7 @@ import fastify from 'fastify'
 import compress from 'fastify-compress'
 import { DI } from 'index'
 import middie from 'middie'
+import apiRoute from 'routes/api'
 
 const PORT = parseInt(process.env.PORT!, 10)
 
@@ -17,6 +18,7 @@ export default class Server {
     await this.app.register(middie)
     this.app.register(compress)
     this.app.use((req, res, next) => RequestContext.create(DI.orm.em, next))
+    this.app.register(apiRoute, { prefix: '/api' })
   }
 
   start() {
