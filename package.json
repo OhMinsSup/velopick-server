@@ -7,6 +7,7 @@
     "start:dev": "NODE_PATH=src ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/dotenv": "^8.2.0",
     "@types/joi": "^17.2.3",
     "@types/node": "^14.14.20",
@@ -28,6 +29,7 @@
     "@mikro-orm/mongo-highlighter": "^1.0.0",
     "@mikro-orm/mongodb": "^4.4.3",
     "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "fastify": "^3.11.0",

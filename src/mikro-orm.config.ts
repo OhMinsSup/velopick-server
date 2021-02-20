@@ -5,7 +5,7 @@ import { User, UserProfile, BaseEntity } from './entities'
 const options: Options = {
   type: 'mongo',
   entities: [User, UserProfile, BaseEntity],
-  dbName: 'velopick',
+  dbName: process.env.MONGODB_DATABASE,
   highlighter: new MongoHighlighter(),
   debug: true,
   host: process.env.MONGODB_HOST,

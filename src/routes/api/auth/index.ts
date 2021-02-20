@@ -3,23 +3,8 @@ import { GenderType } from 'entities'
 import { FastifyPluginCallback } from 'fastify'
 import { StatusCodes } from 'http-status-codes'
 import AuthService from 'service/auth'
-
-const SignupBodyJsonSchema = {
-  type: 'object',
-  required: ['email', 'password', 'username'],
-  properties: {
-    email: { type: 'string' },
-    password: { type: 'string' },
-    username: { type: 'string' },
-    gender: {
-      type: 'string',
-      enum: [GenderType.Male, GenderType.FeMale],
-    },
-    birthday: {
-      type: ['string', 'null'],
-    },
-  },
-}
+import { SignupBody, SignupBodyJsonSchema } from './dto/Signup.dto'
+import { badRequestResponse } from 'error/exception'
 
 const authService = new AuthService()
 
@@ -31,7 +16,7 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
         body: SignupBodyJsonSchema,
       },
     },
-    (request, reply) => {
+    async (request, reply) => {
       const schema = Joi.object().keys({
         email: Joi.string().email().required(),
         password: Joi.string().required(),
@@ -48,18 +33,23 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
 
       const result = schema.validate(request.body)
       if (result.error) {
-        reply.status(StatusCodes.BAD_REQUEST).send({
-          ok: false,
-          message: result.error.message,
-          resultCode: 0,
-          statusCode: StatusCodes.BAD_REQUEST,
-          data: null,
-        })
+        reply
+          .status(StatusCodes.BAD_REQUEST)
+          .send(badRequestResponse({ message: result.error.message }))
         return
       }
 
-      console.log(request.body)
-      reply.send(request.body)
+      try {
+        const result = await authService.signup(request.body as SignupBody)
+        if (!result.ok) {
+          reply.status(result.statusCode).send(result)
+          return
+        }
+        reply.status(StatusCodes.OK).send(result)
+      } catch (e) {
+        console.error(e)
+        throw e
+      }
     }
   )
   done()
