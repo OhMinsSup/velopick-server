@@ -623,6 +623,11 @@ contains-path@^0.1.0:
   resolved "https://registry.yarnpkg.com/contains-path/-/contains-path-0.1.0.tgz#fe8cf184ff6670b6baef01a9d4861a5cbec4120a"
   integrity sha1-/ozxhP9mcLa67wGp1IYaXL7EEgo=
 
+cookie-signature@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.1.0.tgz#cc94974f91fb9a9c1bb485e95fc2b7f4b120aff2"
+  integrity sha512-Alvs19Vgq07eunykd3Xy2jF0/qSNv2u7KDbAek9H5liV1UMijbqFs5cycZvv5dVsvseT/U4H8/7/w8Koh35C4A==
+
 cookie@^0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
@@ -1117,6 +1122,15 @@ fastify-compress@^3.4.1:
     pumpify "^2.0.1"
     string-to-stream "^3.0.0"
     unzipper "^0.10.8"
+
+fastify-cookie@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/fastify-cookie/-/fastify-cookie-5.1.0.tgz#d09099d1516f407cfc73d9e8318f9778035a6251"
+  integrity sha512-AN5C/p7YVSgnW1D9fcUL10yRIN+9lcOtyps3h4/5ZsxwrHVgdNH5T77CbnIrzfAx6qz7K/8NYQCTE8cxZIJcJg==
+  dependencies:
+    cookie "^0.4.0"
+    cookie-signature "^1.1.0"
+    fastify-plugin "^3.0.0"
 
 fastify-error@^0.3.0:
   version "0.3.0"

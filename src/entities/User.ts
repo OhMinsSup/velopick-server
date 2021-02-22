@@ -1,6 +1,5 @@
 import {
   Entity,
-  EntityRepositoryType,
   OneToOne,
   Property,
   Unique,
@@ -17,7 +16,7 @@ export class User extends BaseEntity {
   @Property({ nullable: false, type: 'string' })
   email: string
 
-  @Property({ nullable: false, type: 'string', hidden: true })
+  @Property({ nullable: false, type: 'string' })
   password: string
 
   @OneToOne(() => UserProfile)
