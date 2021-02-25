@@ -2,6 +2,7 @@ import { RequestContext } from '@mikro-orm/core'
 import fastify from 'fastify'
 import compress from 'fastify-compress'
 import cookie from 'fastify-cookie'
+import helmet from 'fastify-helmet'
 import { DI } from 'index'
 import middie from 'middie'
 import apiRoute from 'routes/api'
@@ -17,9 +18,11 @@ export default class Server {
 
   async setup() {
     await this.app.register(middie)
-    this.app.register(cookie)
     this.app.register(compress)
+    this.app.register(helmet)
+    this.app.register(cookie)
     this.app.use((req, res, next) => RequestContext.create(DI.orm.em, next))
+
     this.app.register(apiRoute, { prefix: '/api' })
   }
 

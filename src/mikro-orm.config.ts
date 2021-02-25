@@ -1,10 +1,10 @@
 import { Options } from '@mikro-orm/core'
 import { MongoHighlighter } from '@mikro-orm/mongo-highlighter'
-import { User, UserProfile, BaseEntity } from './entities'
+import { User, UserProfile, BaseEntity, AuthToken } from './entities'
 
 const options: Options = {
   type: 'mongo',
-  entities: [User, UserProfile, BaseEntity],
+  entities: [User, UserProfile, BaseEntity, AuthToken],
   dbName: process.env.MONGODB_DATABASE,
   highlighter: new MongoHighlighter(),
   debug: true,

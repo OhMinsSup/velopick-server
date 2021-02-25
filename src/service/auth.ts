@@ -11,13 +11,19 @@ import { User, UserProfile } from 'entities'
 import { SigninBody } from 'routes/api/auth/dto/SignIn.dto'
 import { StatusCodes } from 'http-status-codes'
 
+type SignInData = {
+  refreshToken: string
+  accessToken: string
+  userId: string
+}
+
 interface AuthServiceInterface {
   signup: (body: SignupBody) => Promise<ResponseType>
-  signin: (body: SigninBody) => Promise<ResponseType>
+  signin: (body: SigninBody) => Promise<ResponseType<SignInData | null>>
 }
 
 class AuthService implements AuthServiceInterface {
-  async signin(body: SigninBody): Promise<ResponseType> {
+  async signin(body: SigninBody): Promise<ResponseType<SignInData | null>> {
     try {
       const user = await DI.userRepository.findOne({ email: body.email })
       if (!user) {
@@ -37,9 +43,12 @@ class AuthService implements AuthServiceInterface {
         })
       }
 
+      const tokens = await user.generateUserToken()
+
       return successResponse({
         data: {
           userId: user.id,
+          ...tokens,
         },
       })
     } catch (e) {
@@ -79,9 +88,7 @@ class AuthService implements AuthServiceInterface {
       await DI.userRepository.persist(user).flush()
 
       return successResponse({
-        data: {
-          userId: user.id,
-        },
+        data: null,
       })
     } catch (e) {
       console.error(e)

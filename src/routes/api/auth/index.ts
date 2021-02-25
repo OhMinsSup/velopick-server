@@ -79,7 +79,14 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
           reply.status(result.statusCode).send(result)
           return
         }
-        reply.status(StatusCodes.OK).send(result)
+
+        reply
+          .setCookie('refresh_token', result.data.refreshToken, {
+            maxAge: 1000 * 60 * 60 * 24 * 30,
+            httpOnly: true,
+          })
+          .status(StatusCodes.OK)
+          .send(result)
       } catch (e) {
         console.error(e)
         throw e
