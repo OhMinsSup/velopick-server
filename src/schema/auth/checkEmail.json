@@ -1,0 +1,6 @@
+{
+  "title": "Check Email Params",
+  "type": "object",
+  "properties": { "value": { "type": "string" } },
+  "required": ["value"]
+}

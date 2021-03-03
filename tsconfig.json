@@ -9,6 +9,7 @@
     "target": "es2017",
     "sourceMap": true,
     "incremental": true,
+    "resolveJsonModule": true,
     "lib": ["es5", "es6"],
     "moduleResolution": "node",
     "outDir": "./build",

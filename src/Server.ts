@@ -5,7 +5,9 @@ import cookie from 'fastify-cookie'
 import helmet from 'fastify-helmet'
 import { DI } from 'index'
 import middie from 'middie'
+import swagger from 'fastify-swagger'
 import apiRoute from 'routes/api'
+import docJSON from 'schema/doc/swagger.json'
 
 const PORT = parseInt(process.env.PORT!, 10)
 
@@ -18,6 +20,7 @@ export default class Server {
 
   async setup() {
     await this.app.register(middie)
+    this.app.register(swagger, docJSON as any)
     this.app.register(compress)
     this.app.register(helmet)
     this.app.register(cookie)

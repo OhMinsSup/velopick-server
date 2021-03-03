@@ -2,12 +2,57 @@ import Joi from 'joi'
 import { GenderType } from 'entities'
 import { FastifyPluginCallback } from 'fastify'
 import { StatusCodes } from 'http-status-codes'
-import { SignupBody, SignupBodyJsonSchema } from './dto/signup.dto'
 import { badRequestResponse } from 'error/exception'
 import { authService } from 'service/auth'
-import { SigninBody, SigninBodyJsonSchema } from './dto/SignIn.dto'
+
+import { SignupBody } from './dto/signup.dto'
+import { SigninBody } from './dto/SignIn.dto'
+import { CheckParams } from './dto/check.dto'
+
+import CheckEmailJsonSchema from 'schema/auth/checkEmail.json'
+import CheckUsernameJsonSchema from 'schema/auth/checkUsername.json'
+import SignupBodyJsonSchema from 'schema/auth/signup.json'
+import SigninBodyJsonSchema from 'schema/auth/signin.json'
 
 const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
+  fastify.get(
+    '/check/email/:value',
+    {
+      schema: {
+        params: CheckEmailJsonSchema,
+      },
+    },
+    async (request, reply) => {
+      const { value } = request.params as CheckParams
+      try {
+        const result = await authService.checkValue('email', value)
+        reply.status(StatusCodes.OK).send(result)
+      } catch (e) {
+        console.error(e)
+        throw e
+      }
+    }
+  )
+
+  fastify.get(
+    '/check/username/:value',
+    {
+      schema: {
+        params: CheckUsernameJsonSchema,
+      },
+    },
+    async (request, reply) => {
+      const { value } = request.params as CheckParams
+      try {
+        const result = await authService.checkValue('username', value)
+        reply.status(StatusCodes.OK).send(result)
+      } catch (e) {
+        console.error(e)
+        throw e
+      }
+    }
+  )
+
   fastify.post(
     '/signup',
     {

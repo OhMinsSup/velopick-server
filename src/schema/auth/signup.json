@@ -1,0 +1,17 @@
+{
+  "title": "Signup Body",
+  "type": "object",
+  "required": ["email", "password", "username"],
+  "properties": {
+    "email": { "type": "string" },
+    "password": { "type": "string" },
+    "username": { "type": "string" },
+    "gender": {
+      "type": "string",
+      "enum": ["M", "F"]
+    },
+    "birthday": {
+      "type": ["string", "null"]
+    }
+  }
+}

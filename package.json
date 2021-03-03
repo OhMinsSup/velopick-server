@@ -37,6 +37,7 @@
     "fastify-compress": "^3.4.1",
     "fastify-cookie": "^5.1.0",
     "fastify-helmet": "^5.2.0",
+    "fastify-swagger": "^4.3.1",
     "http-status-codes": "^2.1.4",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",

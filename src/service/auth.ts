@@ -18,11 +18,58 @@ type SignInData = {
 }
 
 interface AuthServiceInterface {
+  checkValue: (
+    type: 'username' | 'email',
+    value: string
+  ) => Promise<ResponseType>
   signup: (body: SignupBody) => Promise<ResponseType>
   signin: (body: SigninBody) => Promise<ResponseType<SignInData | null>>
 }
 
 class AuthService implements AuthServiceInterface {
+  async checkValue(
+    type: 'username' | 'email',
+    value: string
+  ): Promise<ResponseType> {
+    try {
+      let user: User | UserProfile
+      if (type === 'email') {
+        user = await DI.userRepository.findOne({ email: value })
+      } else {
+        user = await DI.userProfileRespository.findOne({
+          username: value,
+        })
+      }
+
+      console.log(user)
+
+      if (user) {
+        let existsType = ''
+        if (user instanceof User) {
+          existsType = user.email === value ? 'email' : ''
+        } else if (user instanceof UserProfile) {
+          existsType = user.username === value ? 'username' : ''
+        }
+
+        return {
+          ok: true,
+          statusCode: StatusCodes.OK,
+          resultCode: resultCode.EXISTS_CODE,
+          message:
+            existsType === 'email'
+              ? '이미 존재하는 이메일입니다.'
+              : '이미 존재하는 유저명입니다.',
+          data: existsType,
+        }
+      }
+
+      return successResponse({ data: null })
+    } catch (e) {
+      console.error(e)
+      throw e
+    }
+  }
+
   async signin(body: SigninBody): Promise<ResponseType<SignInData | null>> {
     try {
       const user = await DI.userRepository.findOne({ email: body.email })
