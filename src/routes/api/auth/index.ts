@@ -1,18 +1,20 @@
 import Joi from 'joi'
-import { GenderType } from 'entities'
 import { FastifyPluginCallback } from 'fastify'
 import { StatusCodes } from 'http-status-codes'
-import { badRequestResponse } from 'error/exception'
-import { authService } from 'service/auth'
+
+import { GenderType } from '../../../entities'
+import { successResponse } from '../../../libs/response'
+import { badRequestResponse } from '../../../error/exception'
+import { authService } from '../../../service/auth'
 
 import { SignupBody } from './dto/signup.dto'
 import { SigninBody } from './dto/SignIn.dto'
 import { CheckParams } from './dto/check.dto'
 
-import CheckEmailJsonSchema from 'schema/auth/checkEmail.json'
-import CheckUsernameJsonSchema from 'schema/auth/checkUsername.json'
-import SignupBodyJsonSchema from 'schema/auth/signup.json'
-import SigninBodyJsonSchema from 'schema/auth/signin.json'
+import CheckEmailJsonSchema from '../../../schema/auth/checkEmail.json'
+import CheckUsernameJsonSchema from '../../../schema/auth/checkUsername.json'
+import SignupJsonSchema from '../../../schema/auth/signup.json'
+import SigninJsonSchema from '../../../schema/auth/signin.json'
 
 const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.get(
@@ -56,9 +58,7 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.post(
     '/signup',
     {
-      schema: {
-        body: SignupBodyJsonSchema,
-      },
+      schema: SignupJsonSchema,
     },
     async (request, reply) => {
       const schema = Joi.object().keys({
@@ -72,7 +72,7 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
         gender: Joi.string()
           .valid(GenderType.Male, GenderType.FeMale)
           .optional(),
-        birthday: Joi.string().allow(null),
+        birthday: Joi.number().required(),
       })
 
       const result = schema.validate(request.body)
@@ -100,9 +100,7 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.post(
     '/signin',
     {
-      schema: {
-        body: SigninBodyJsonSchema,
-      },
+      schema: SigninJsonSchema,
     },
     async (request, reply) => {
       const schema = Joi.object().keys({
@@ -129,6 +127,12 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
           .setCookie('refresh_token', result.data.refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
+            path: '/',
+          })
+          .setCookie('access_token', result.data.accessToken, {
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            httpOnly: true,
+            path: '/',
           })
           .status(StatusCodes.OK)
           .send(result)
@@ -138,6 +142,15 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
       }
     }
   )
+
+  fastify.post('/logout', (request, reply) => {
+    reply
+      .clearCookie('access_token')
+      .clearCookie('refresh_token')
+      .status(StatusCodes.OK)
+      .send(successResponse({ data: null }))
+  })
+
   done()
 }
 

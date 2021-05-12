@@ -4,7 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start:dev": "NODE_PATH=src ts-node-dev --respawn --transpile-only src/index.ts"
+    "schema:drop": "node node_modules/.bin/mikro-orm schema:drop",
+    "schema:create": "node node_modules/.bin/mikro-orm schema:create",
+    "schema:update": "node node_modules/.bin/mikro-orm schema:update",
+    "start:dev": "NODE_PATH=src ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -25,9 +28,11 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "@mikro-orm/cli": "^4.5.4",
     "@mikro-orm/core": "^4.4.3",
-    "@mikro-orm/mongo-highlighter": "^1.0.0",
-    "@mikro-orm/mongodb": "^4.4.3",
+    "@mikro-orm/entity-generator": "^4.5.4",
+    "@mikro-orm/mariadb": "^4.5.4",
+    "@mikro-orm/sql-highlighter": "^1.0.1",
     "@types/jsonwebtoken": "^8.5.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
@@ -36,11 +41,14 @@
     "fastify": "^3.11.0",
     "fastify-compress": "^3.4.1",
     "fastify-cookie": "^5.1.0",
+    "fastify-cors": "^6.0.1",
     "fastify-helmet": "^5.2.0",
+    "fastify-plugin": "^3.0.0",
     "fastify-swagger": "^4.3.1",
     "http-status-codes": "^2.1.4",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.5.3",
     "middie": "^5.2.0",
     "reflect-metadata": "^0.1.13"
   },

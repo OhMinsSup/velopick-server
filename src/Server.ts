@@ -1,13 +1,12 @@
-import { RequestContext } from '@mikro-orm/core'
 import fastify from 'fastify'
 import compress from 'fastify-compress'
 import cookie from 'fastify-cookie'
-import helmet from 'fastify-helmet'
-import { DI } from 'index'
-import middie from 'middie'
 import swagger from 'fastify-swagger'
-import apiRoute from 'routes/api'
-import docJSON from 'schema/doc/swagger.json'
+import corsPlugin from 'fastify-cors'
+import middie from 'middie'
+
+import { DI } from './app'
+import apiRoute from './routes/api'
 
 const PORT = parseInt(process.env.PORT!, 10)
 
@@ -20,23 +19,64 @@ export default class Server {
 
   async setup() {
     await this.app.register(middie)
-    this.app.register(swagger, docJSON as any)
-    this.app.register(compress)
-    this.app.register(helmet)
-    this.app.register(cookie)
-    this.app.use((req, res, next) => RequestContext.create(DI.orm.em, next))
 
+    this.app.register(corsPlugin, {
+      origin: (origin, callback) => {
+        if (!origin) {
+          return callback(null, true)
+        }
+        const host = origin.split('://')[1]
+        const allowedHost = ['localhost:3000']
+
+        const allowed = allowedHost.includes(host)
+        callback(null, allowed)
+      },
+      credentials: true,
+    })
+
+    this.app.register(swagger, {
+      routePrefix: '/documentation',
+      exposeRoute: true,
+      swagger: {
+        info: {
+          title: 'Velopick API Server Swagger',
+          description: 'Velopick (fastify) Swagger API',
+          version: '1.0.0',
+        },
+        externalDocs: {
+          url: 'https://swagger.io',
+          description: 'Find more info here',
+        },
+        host: 'localhost',
+        schemes: ['http'],
+        consumes: ['application/json'],
+        produces: ['application/json'],
+      },
+    })
+    this.app.register(cookie)
+    this.app.register(compress)
     this.app.register(apiRoute, { prefix: '/api' })
+
+    // this.app.use((req, res, next) =>
+    //   RequestContext.createAsync(DI.orm.em, next)
+    // )
+
+    this.app.setErrorHandler((error, request, reply) => {
+      reply.send({
+        statusCode: error.statusCode,
+        name: error.name,
+        message: error.message,
+        validation: error.validation,
+        stack: error.stack,
+      })
+    })
   }
 
   start() {
-    try {
-      this.app.listen(PORT, (err, address) => {
-        if (err) throw err
-        console.log(`🚀 Velopick Server listening on ${address}`)
-      })
-    } catch (e) {
-      this.app.log.error(e)
-    }
+    return this.app.listen(PORT)
+  }
+
+  close() {
+    return this.app.close()
   }
 }

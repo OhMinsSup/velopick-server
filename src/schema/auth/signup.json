@@ -1,17 +1,50 @@
 {
-  "title": "Signup Body",
-  "type": "object",
-  "required": ["email", "password", "username"],
-  "properties": {
-    "email": { "type": "string" },
-    "password": { "type": "string" },
-    "username": { "type": "string" },
-    "gender": {
-      "type": "string",
-      "enum": ["M", "F"]
+  "title": "Signup API (회원가입)",
+  "description": "velopick 회원가입 API",
+  "summary": "회원 인증",
+  "body": {
+    "type": "object",
+    "required": ["email", "password", "username"],
+    "properties": {
+      "email": { "type": "string" },
+      "password": { "type": "string" },
+      "username": { "type": "string" },
+      "gender": {
+        "type": "string",
+        "enum": ["M", "F"]
+      },
+      "birthday": { "type": "number" }
+    }
+  },
+  "response": {
+    "200": {
+      "description": "로그인 성공 및 비밀번호가 일치하지 않는 경우",
+      "type": "object",
+      "properties": {
+        "ok": { "type": "boolean" },
+        "statusCode": { "type": "number" },
+        "resultCode": { "type": "number" },
+        "message": { "type": "string" },
+        "data": { "type": "object" }
+      }
     },
-    "birthday": {
-      "type": ["string", "null"]
+    "409": {
+      "description": "이메일 및 유저명이 이미 사용중인 경우",
+      "type": "object",
+      "properties": {
+        "ok": { "type": "boolean" },
+        "statusCode": { "type": "number" },
+        "resultCode": { "type": "number" },
+        "message": { "type": "string" },
+        "data": {
+          "type": "object",
+          "properties": {
+            "exists": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   }
 }

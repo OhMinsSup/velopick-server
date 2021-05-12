@@ -5,24 +5,31 @@ import {
   Unique,
   BeforeCreate,
   BeforeUpdate,
+  Index,
 } from '@mikro-orm/core'
 import * as bcrypt from 'bcrypt'
-import { DI } from 'index'
-import { generateToken } from 'libs/tokens'
-import { AuthToken } from './AuthToken'
+import { DI } from '../app'
+import { generateToken } from '../libs/tokens'
 import { BaseEntity } from './BaseEntity'
 import { UserProfile } from './UserProfile'
 
 @Entity()
 export class User extends BaseEntity {
-  @Unique()
-  @Property({ nullable: false, type: 'string' })
+  @Index()
+  @Property({
+    nullable: false,
+    unique: true,
+    type: 'string',
+    comment: '유저 이메일',
+  })
   email: string
 
-  @Property({ nullable: false, type: 'string' })
+  @Property({ nullable: false, type: 'string', comment: '패스워드' })
   password: string
 
-  @OneToOne(() => UserProfile)
+  @OneToOne(() => UserProfile, (userProfile) => userProfile.user, {
+    owner: true,
+  })
   profile: UserProfile
 
   /**
@@ -61,16 +68,10 @@ export class User extends BaseEntity {
    * @description 유저 인증 토큰 생성
    */
   async generateUserToken() {
-    const authToken = new AuthToken()
-    authToken.userId = this.id
-
-    await DI.authTokenRespository.persist(authToken).flush()
-
     // refresh token is valid for 30days
     const refreshToken = await generateToken(
       {
         user_id: this.id,
-        token_id: authToken.id,
       },
       {
         subject: 'refresh_token',

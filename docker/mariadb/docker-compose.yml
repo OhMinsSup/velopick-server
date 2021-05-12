@@ -1,0 +1,13 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: velopick!
+    volumes:
+      - ./db:/var/lib/mysql
+    ports:
+      - 3307:3306

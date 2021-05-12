@@ -1,18 +1,17 @@
 import { Options } from '@mikro-orm/core'
-import { MongoHighlighter } from '@mikro-orm/mongo-highlighter'
-import { User, UserProfile, BaseEntity, AuthToken } from './entities'
+import { SqlHighlighter } from '@mikro-orm/sql-highlighter'
+import { User, UserProfile, BaseEntity } from './entities'
 
 const options: Options = {
-  type: 'mongo',
-  entities: [User, UserProfile, BaseEntity, AuthToken],
-  dbName: process.env.MONGODB_DATABASE,
-  highlighter: new MongoHighlighter(),
+  type: 'mariadb',
+  entities: [User, UserProfile, BaseEntity],
+  dbName: process.env.DB_DATABASE,
   debug: true,
-  host: process.env.MONGODB_HOST,
-  port: +process.env.MONGODB_PORT,
-  user: process.env.MONGODB_USERNAME,
-  password: process.env.MONGODB_PASSWORD,
-  ensureIndexes: true,
+  highlighter: new SqlHighlighter(),
+  host: process.env.DB_HOST,
+  port: +process.env.DB_PORT,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
 }
 
 export default options

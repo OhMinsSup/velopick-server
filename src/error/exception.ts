@@ -1,4 +1,4 @@
-import { ResponseType } from 'libs/response'
+import { ResponseType } from '../libs/response'
 import { StatusCodes } from 'http-status-codes'
 
 export const resultCode = {

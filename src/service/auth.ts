@@ -1,20 +1,21 @@
-import { ResponseType, successResponse } from 'libs/response'
+import { StatusCodes } from 'http-status-codes'
+
+import { ResponseType, successResponse } from '../libs/response'
+import { DI } from '../app'
+import { SignupBody } from '../routes/api/auth/dto/signup.dto'
+import { User, UserProfile } from '../entities'
+import { SigninBody } from '../routes/api/auth/dto/SignIn.dto'
 import {
   customExceptionResponse,
   existsResponse,
   notFoundResponse,
   resultCode,
-} from 'error/exception'
-import { DI } from 'index'
-import { SignupBody } from 'routes/api/auth/dto/signup.dto'
-import { User, UserProfile } from 'entities'
-import { SigninBody } from 'routes/api/auth/dto/SignIn.dto'
-import { StatusCodes } from 'http-status-codes'
+} from '../error/exception'
 
 type SignInData = {
   refreshToken: string
   accessToken: string
-  userId: string
+  userId: number
 }
 
 interface AuthServiceInterface {
@@ -40,8 +41,6 @@ class AuthService implements AuthServiceInterface {
           username: value,
         })
       }
-
-      console.log(user)
 
       if (user) {
         let existsType = ''
@@ -103,6 +102,7 @@ class AuthService implements AuthServiceInterface {
       throw e
     }
   }
+
   async signup(body: SignupBody): Promise<ResponseType> {
     try {
       const [exists, ok] = await this.findByUsernameOrEmail({
@@ -125,7 +125,9 @@ class AuthService implements AuthServiceInterface {
       const profile = new UserProfile()
       profile.username = body.username
       profile.gender = body.gender
-      profile.birthday = body.birthday
+      profile.birthday = new Date(body.birthday)
+
+      await DI.userProfileRespository.persist(profile).flush()
 
       const user = new User()
       user.email = body.email

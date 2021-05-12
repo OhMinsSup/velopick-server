@@ -5,5 +5,5 @@ export interface SignupBody {
   password: string
   username: string
   gender: GenderType
-  birthday: string | null
+  birthday: number
 }

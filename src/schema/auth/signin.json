@@ -1,9 +1,37 @@
 {
-  "title": "Signin Body",
-  "type": "object",
-  "required": ["email", "password"],
-  "properties": {
-    "email": { "type": "string" },
-    "password": { "type": "string" }
+  "title": "Signin API (로그인)",
+  "description": "velopick 로그인 API",
+  "summary": "회원 인증",
+  "body": {
+    "type": "object",
+    "required": ["email", "password"],
+    "properties": {
+      "email": { "type": "string" },
+      "password": { "type": "string" }
+    }
+  },
+  "response": {
+    "200": {
+      "description": "로그인 성공 및 비밀번호가 일치하지 않는 경우",
+      "type": "object",
+      "properties": {
+        "ok": { "type": "boolean" },
+        "statusCode": { "type": "number" },
+        "resultCode": { "type": "number" },
+        "message": { "type": "string" },
+        "data": { "type": "object" }
+      }
+    },
+    "404": {
+      "description": "유저가 존재하지 않습니다.",
+      "type": "object",
+      "properties": {
+        "ok": { "type": "boolean" },
+        "statusCode": { "type": "number" },
+        "resultCode": { "type": "number" },
+        "message": { "type": "string" },
+        "data": { "type": "object" }
+      }
+    }
   }
 }
