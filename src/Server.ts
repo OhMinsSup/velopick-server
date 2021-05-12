@@ -5,7 +5,7 @@ import swagger from 'fastify-swagger'
 import corsPlugin from 'fastify-cors'
 import middie from 'middie'
 
-import { DI } from './app'
+// import { DI } from './app'
 import apiRoute from './routes/api'
 
 const PORT = parseInt(process.env.PORT!, 10)

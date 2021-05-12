@@ -1,7 +1,8 @@
 {
   "title": "Signup API (회원가입)",
   "description": "velopick 회원가입 API",
-  "summary": "회원 인증",
+  "summary": "회원가입",
+  "tags": ["회원인증"],
   "body": {
     "type": "object",
     "required": ["email", "password", "username"],

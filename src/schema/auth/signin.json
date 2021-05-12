@@ -1,7 +1,8 @@
 {
   "title": "Signin API (로그인)",
   "description": "velopick 로그인 API",
-  "summary": "회원 인증",
+  "summary": "로그인",
+  "tags": ["회원인증"],
   "body": {
     "type": "object",
     "required": ["email", "password"],

@@ -1,0 +1,19 @@
+{
+  "title": "Signin API (로그아웃)",
+  "description": "velopick 로그아웃 API",
+  "summary": "로그아웃",
+  "tags": ["회원인증"],
+  "response": {
+    "200": {
+      "description": "로그아웃",
+      "type": "object",
+      "properties": {
+        "ok": { "type": "boolean" },
+        "statusCode": { "type": "number" },
+        "resultCode": { "type": "number" },
+        "message": { "type": "string" },
+        "data": { "type": "object" }
+      }
+    }
+  }
+}

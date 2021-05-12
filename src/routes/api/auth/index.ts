@@ -15,6 +15,7 @@ import CheckEmailJsonSchema from '../../../schema/auth/checkEmail.json'
 import CheckUsernameJsonSchema from '../../../schema/auth/checkUsername.json'
 import SignupJsonSchema from '../../../schema/auth/signup.json'
 import SigninJsonSchema from '../../../schema/auth/signin.json'
+import LogoutJsonSchema from '../../../schema/auth/logout.json'
 
 const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.get(
@@ -143,7 +144,7 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
     }
   )
 
-  fastify.post('/logout', (request, reply) => {
+  fastify.post('/logout', { schema: LogoutJsonSchema }, (request, reply) => {
     reply
       .clearCookie('access_token')
       .clearCookie('refresh_token')
