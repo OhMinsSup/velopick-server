@@ -1,12 +1,12 @@
 import {
   Cascade,
+  DateType,
   Entity,
   Enum,
   Index,
   JsonType,
   OneToOne,
   Property,
-  Unique,
 } from '@mikro-orm/core'
 import { BaseEntity } from './BaseEntity'
 import { User } from './User'
@@ -34,7 +34,7 @@ export class UserProfile extends BaseEntity {
   @Property({ type: 'string', comment: '회원 프로필 이미지', nullable: true })
   thumbnailUrl: string
 
-  @Property({ type: Date, comment: '회원 생일', nullable: false })
+  @Property({ type: DateType, comment: '회원 생일', nullable: false })
   birthday: Date
 
   @Enum({ items: () => GenderType, comment: '회원 성별', nullable: false })

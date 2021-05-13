@@ -29,6 +29,17 @@
         "data": { "type": "object" }
       }
     },
+    "400": {
+      "description": "데이터 유효성 에러",
+      "type": "object",
+      "properties": {
+        "ok": { "type": "boolean" },
+        "statusCode": { "type": "number" },
+        "resultCode": { "type": "number" },
+        "message": { "type": "string" },
+        "data": { "type": "object" }
+      }
+    },
     "409": {
       "description": "이메일 및 유저명이 이미 사용중인 경우",
       "type": "object",
@@ -41,7 +52,8 @@
           "type": "object",
           "properties": {
             "exists": {
-              "type": "string"
+              "type": "string",
+              "enum": ["email", "username"]
             }
           }
         }

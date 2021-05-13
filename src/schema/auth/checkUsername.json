@@ -1,6 +1,0 @@
-{
-  "title": "Check Username Params",
-  "type": "object",
-  "properties": { "value": { "type": "string" } },
-  "required": ["value"]
-}

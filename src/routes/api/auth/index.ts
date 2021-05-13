@@ -9,10 +9,7 @@ import { authService } from '../../../service/auth'
 
 import { SignupBody } from './dto/signup.dto'
 import { SigninBody } from './dto/SignIn.dto'
-import { CheckParams } from './dto/check.dto'
 
-import CheckEmailJsonSchema from '../../../schema/auth/checkEmail.json'
-import CheckUsernameJsonSchema from '../../../schema/auth/checkUsername.json'
 import SignupJsonSchema from '../../../schema/auth/signup.json'
 import SigninJsonSchema from '../../../schema/auth/signin.json'
 import LogoutJsonSchema from '../../../schema/auth/logout.json'

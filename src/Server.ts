@@ -5,7 +5,7 @@ import swagger from 'fastify-swagger'
 import corsPlugin from 'fastify-cors'
 import middie from 'middie'
 
-// import { DI } from './app'
+import jwtPlugin from './plugins/jwtPlugin'
 import apiRoute from './routes/api'
 
 const PORT = parseInt(process.env.PORT!, 10)
@@ -55,6 +55,7 @@ export default class Server {
     })
     this.app.register(cookie)
     this.app.register(compress)
+    this.app.register(jwtPlugin)
     this.app.register(apiRoute, { prefix: '/api' })
 
     // this.app.use((req, res, next) =>

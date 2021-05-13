@@ -20,6 +20,24 @@
         "statusCode": { "type": "number" },
         "resultCode": { "type": "number" },
         "message": { "type": "string" },
+        "data": {
+          "type": "object",
+          "properties": {
+            "userId": { "type": "number" },
+            "refreshToken": { "type": "string" },
+            "accessToken": { "type": "string" }
+          }
+        }
+      }
+    },
+    "400": {
+      "description": "데이터 유효성 에러",
+      "type": "object",
+      "properties": {
+        "ok": { "type": "boolean" },
+        "statusCode": { "type": "number" },
+        "resultCode": { "type": "number" },
+        "message": { "type": "string" },
         "data": { "type": "object" }
       }
     },
