@@ -2,13 +2,11 @@ import {
   Entity,
   OneToOne,
   Property,
-  Unique,
   BeforeCreate,
   BeforeUpdate,
   Index,
 } from '@mikro-orm/core'
 import * as bcrypt from 'bcrypt'
-import { DI } from '../app'
 import { generateToken } from '../libs/tokens'
 import { BaseEntity } from './BaseEntity'
 import { UserProfile } from './UserProfile'

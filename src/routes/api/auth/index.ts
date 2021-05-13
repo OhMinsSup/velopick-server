@@ -18,44 +18,6 @@ import SigninJsonSchema from '../../../schema/auth/signin.json'
 import LogoutJsonSchema from '../../../schema/auth/logout.json'
 
 const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
-  fastify.get(
-    '/check/email/:value',
-    {
-      schema: {
-        params: CheckEmailJsonSchema,
-      },
-    },
-    async (request, reply) => {
-      const { value } = request.params as CheckParams
-      try {
-        const result = await authService.checkValue('email', value)
-        reply.status(StatusCodes.OK).send(result)
-      } catch (e) {
-        console.error(e)
-        throw e
-      }
-    }
-  )
-
-  fastify.get(
-    '/check/username/:value',
-    {
-      schema: {
-        params: CheckUsernameJsonSchema,
-      },
-    },
-    async (request, reply) => {
-      const { value } = request.params as CheckParams
-      try {
-        const result = await authService.checkValue('username', value)
-        reply.status(StatusCodes.OK).send(result)
-      } catch (e) {
-        console.error(e)
-        throw e
-      }
-    }
-  )
-
   fastify.post(
     '/signup',
     {
