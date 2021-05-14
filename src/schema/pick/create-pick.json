@@ -1,0 +1,17 @@
+{
+  "title": "Create Pick API (Pick 생성)",
+  "description": "velopick Pick 생성 API",
+  "summary": "Pick",
+  "tags": ["Pick"],
+  "body": {
+    "type": "object",
+    "required": ["title"],
+    "properties": {
+      "title": { "type": "string" },
+      "description": { "type": "string" },
+      "is_private": { "type": "boolean" },
+      "is_temp": { "type": "boolean" },
+      "url_slug": { "type": "string" }
+    }
+  }
+}

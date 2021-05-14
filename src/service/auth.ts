@@ -125,7 +125,7 @@ class AuthService implements AuthServiceInterface {
       )
 
       if (exists) {
-        return exists.email ? ['username', true] : ['email', true]
+        return exists.email === email ? ['email', true] : ['username', true]
       }
 
       return [null, false]

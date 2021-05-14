@@ -6,6 +6,20 @@ export const resultCode = {
 
   EXISTS_CODE: 40001,
   NOTFOUND_DATA: 40002,
+
+  UNAUTHORIZED: 50001,
+}
+
+export function unauthorizedResponse<Data = any>(
+  data = null
+): ResponseType<Data> {
+  return {
+    ok: false,
+    statusCode: StatusCodes.UNAUTHORIZED,
+    resultCode: resultCode.UNAUTHORIZED,
+    message: '로그인을 해주세요.',
+    data,
+  }
 }
 
 export function badRequestResponse<Data = any>({

@@ -16,48 +16,5 @@
       },
       "birthday": { "type": "number" }
     }
-  },
-  "response": {
-    "200": {
-      "description": "로그인 성공 및 비밀번호가 일치하지 않는 경우",
-      "type": "object",
-      "properties": {
-        "ok": { "type": "boolean" },
-        "statusCode": { "type": "number" },
-        "resultCode": { "type": "number" },
-        "message": { "type": "string" },
-        "data": { "type": "object" }
-      }
-    },
-    "400": {
-      "description": "데이터 유효성 에러",
-      "type": "object",
-      "properties": {
-        "ok": { "type": "boolean" },
-        "statusCode": { "type": "number" },
-        "resultCode": { "type": "number" },
-        "message": { "type": "string" },
-        "data": { "type": "object" }
-      }
-    },
-    "409": {
-      "description": "이메일 및 유저명이 이미 사용중인 경우",
-      "type": "object",
-      "properties": {
-        "ok": { "type": "boolean" },
-        "statusCode": { "type": "number" },
-        "resultCode": { "type": "number" },
-        "message": { "type": "string" },
-        "data": {
-          "type": "object",
-          "properties": {
-            "exists": {
-              "type": "string",
-              "enum": ["email", "username"]
-            }
-          }
-        }
-      }
-    }
   }
 }

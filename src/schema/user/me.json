@@ -2,45 +2,5 @@
   "title": "User Me API (내정보)",
   "description": "velopick 내정보 API",
   "summary": "내정보 조회",
-  "tags": ["유저"],
-  "headers": {
-    "type": "object",
-    "properties": {
-      "authorization": {
-        "type": "string",
-        "description": "jwt token"
-      }
-    }
-  },
-  "response": {
-    "200": {
-      "description": "로그인 성공 및 비밀번호가 일치하지 않는 경우",
-      "type": "object",
-      "properties": {
-        "ok": { "type": "boolean" },
-        "statusCode": { "type": "number" },
-        "resultCode": { "type": "number" },
-        "message": { "type": "string" },
-        "data": {
-          "type": "object",
-          "properties": {
-            "id": { "type": "number" },
-            "email": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" },
-            "profile": {
-              "type": "object",
-              "properties": {
-                "username": { "type": "string" },
-                "thumbnailUrl": { "type": "string" },
-                "birthday": { "type": "string" },
-                "gender": { "type": "string", "enum": ["M", "F"] },
-                "socialLinks": { "type": "object" }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  "tags": ["유저"]
 }

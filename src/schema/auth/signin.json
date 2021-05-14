@@ -10,47 +10,5 @@
       "email": { "type": "string" },
       "password": { "type": "string" }
     }
-  },
-  "response": {
-    "200": {
-      "description": "로그인 성공 및 비밀번호가 일치하지 않는 경우",
-      "type": "object",
-      "properties": {
-        "ok": { "type": "boolean" },
-        "statusCode": { "type": "number" },
-        "resultCode": { "type": "number" },
-        "message": { "type": "string" },
-        "data": {
-          "type": "object",
-          "properties": {
-            "userId": { "type": "number" },
-            "refreshToken": { "type": "string" },
-            "accessToken": { "type": "string" }
-          }
-        }
-      }
-    },
-    "400": {
-      "description": "데이터 유효성 에러",
-      "type": "object",
-      "properties": {
-        "ok": { "type": "boolean" },
-        "statusCode": { "type": "number" },
-        "resultCode": { "type": "number" },
-        "message": { "type": "string" },
-        "data": { "type": "object" }
-      }
-    },
-    "404": {
-      "description": "유저가 존재하지 않습니다.",
-      "type": "object",
-      "properties": {
-        "ok": { "type": "boolean" },
-        "statusCode": { "type": "number" },
-        "resultCode": { "type": "number" },
-        "message": { "type": "string" },
-        "data": { "type": "object" }
-      }
-    }
   }
 }

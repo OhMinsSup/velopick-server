@@ -1,8 +1,8 @@
 import { DI } from 'app'
-import { FastifyPluginAsync, FastifyPluginCallback } from 'fastify'
+import { unauthorizedResponse } from 'error/exception'
+import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 import { User } from '../entities'
-import CustomError from '../error/customError'
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -18,8 +18,7 @@ const callback: FastifyPluginAsync<{ fetchUser: boolean }> = async (
   fastify.decorateRequest('userData', null)
   fastify.addHook('preHandler', async (request, reply) => {
     if (!request.user) {
-      reply.status(401)
-      throw new Error('Unauthorized')
+      reply.status(401).send(unauthorizedResponse())
     }
 
     if (fetchUser) {
@@ -32,11 +31,7 @@ const callback: FastifyPluginAsync<{ fetchUser: boolean }> = async (
 
       request.userData = userData ?? null
       if (!userData) {
-        throw new CustomError({
-          statusCode: 401,
-          name: 'UnauthorizedError',
-          message: 'Not logged in',
-        })
+        reply.status(401).send(unauthorizedResponse())
       }
     }
   })

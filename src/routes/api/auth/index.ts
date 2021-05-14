@@ -12,7 +12,6 @@ import { SigninBody } from './dto/SignIn.dto'
 
 import SignupJsonSchema from '../../../schema/auth/signup.json'
 import SigninJsonSchema from '../../../schema/auth/signin.json'
-import LogoutJsonSchema from '../../../schema/auth/logout.json'
 
 const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.post(
@@ -103,7 +102,7 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
     }
   )
 
-  fastify.post('/logout', { schema: LogoutJsonSchema }, (request, reply) => {
+  fastify.post('/logout', (request, reply) => {
     reply
       .clearCookie('access_token')
       .clearCookie('refresh_token')
