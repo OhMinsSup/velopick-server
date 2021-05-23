@@ -11,7 +11,9 @@
       "description": { "type": "string" },
       "is_private": { "type": "boolean" },
       "is_temp": { "type": "boolean" },
-      "url_slug": { "type": "string" }
+      "url_slug": { "type": "string" },
+      "tags": { "type": "array", "items": { "type": "string" } },
+      "users": { "type": "array", "items": { "type": "integer" } }
     }
   }
 }

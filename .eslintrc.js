@@ -7,14 +7,13 @@ module.exports = {
   extends: ['standard'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: 'tsconfig.json',
     ecmaVersion: 12,
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],
   extends: ['prettier', 'prettier/@typescript-eslint'],
   rules: {
-    'comma-dangle': false,
+    'comma-dangle': 'off',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

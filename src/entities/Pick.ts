@@ -22,7 +22,7 @@ export class Pick extends BaseEntity {
   })
   url_slug: string
 
-  @Property({ type: 'string', comment: 'pick의 타이틀' })
+  @Property({ type: 'string', comment: 'pick의 타이틀', nullable: false })
   title: string
 
   @Property({ type: 'string', length: 255, comment: 'pick의 설명' })
