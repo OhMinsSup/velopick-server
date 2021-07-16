@@ -5,8 +5,8 @@ import pickRoute from './pick'
 
 const apiRoute: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.register(authRoute, { prefix: '/auth' })
-  fastify.register(userRoute, { prefix: '/user' })
-  fastify.register(pickRoute, { prefix: '/pick' })
+  fastify.register(userRoute, { prefix: '/users' })
+  fastify.register(pickRoute, { prefix: '/picks' })
   done()
 }
 

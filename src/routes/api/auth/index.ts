@@ -24,8 +24,7 @@ const authRoute: FastifyPluginCallback = (fastify, opts, done) => {
         email: Joi.string().email().required(),
         password: Joi.string().required(),
         username: Joi.string()
-          .regex(/^[a-z0-9-_]+$/)
-          .min(3)
+          .regex(/^[ㄱ-ㅎ가-힣a-z0-9-_]+$/)
           .max(16)
           .required(),
         gender: Joi.string()
